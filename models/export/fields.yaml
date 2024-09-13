@@ -1,0 +1,68 @@
+fields:
+
+    filter_section:
+        label: 1. Filter records
+        type: section
+        cssClass: m-t-md
+
+    filter_type:
+        label: Export all records
+        type: switch
+        span: full
+        default: true
+
+    filter_groups:
+        label: Groups
+        span: full
+        type: checkboxlist
+        options: getGroupsOptions
+        trigger:
+            action: hide
+            field: filter_type
+            condition: checked
+
+    filter_date_after:
+        label: Date after
+        span: left
+        type: datepicker
+        mode: date
+        trigger:
+            action: hide
+            field: filter_type
+            condition: checked
+
+    filter_date_before:
+        label: Date before
+        span: right
+        type: datepicker
+        mode: date
+        trigger:
+            action: hide
+            field: filter_type
+            condition: checked
+
+    options_section:
+        label: 2. Extra options
+        type: section
+        cssClass: m-t-md
+
+    options_metadata:
+        label: Include metadata
+        comment: Export records with metadata (Record ID, group, IP, created date)
+        span: left
+        type: switch
+        default: true
+        
+    options_delimiter:
+        label: Use alternative delimiter
+        comment: Use semicolon as delimiter
+        span: right
+        type: switch
+        default: false
+
+    options_files:
+        label: Include attached files
+        comment: Only download URLs will be exported
+        span: left
+        type: switch
+        default: false

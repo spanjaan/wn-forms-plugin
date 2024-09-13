@@ -1,0 +1,17 @@
+list: $/spanjaan/forms/models/record/columns.yaml
+modelClass: SpAnjaan\Forms\Models\Record
+title: View Records
+recordUrl: spanjaan/forms/records/view/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 20
+showSetup: true
+showSorting: true
+showCheckboxes: true
+filter: config_filter.yaml
+
+defaultSort:
+    column   : created_at
+    direction: desc
+
+toolbar:
+    buttons: partials/list_toolbar

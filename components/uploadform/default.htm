@@ -1,0 +1,47 @@
+{{ form_ajax(__SELF__ ~ '::onFormSubmit', { id: 'contactForm', validate: true, files: true, flash: true }) }}
+
+    <div id="{{ __SELF__ }}_forms_flash"></div>
+
+    <div class="mb-3">
+        <label class="form-label" for="name">Name</label>
+        <input class="form-control form-control-lg" type="text" id="name" name="name" placeholder="Name" autocomplete="on" >
+        <div class="text-danger" data-validate-for="name"></div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-control form-control-lg" type="text" id="email" name="email" placeholder="Email" autocomplete="on">
+        <div class="text-danger" data-validate-for="email"></div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="message">Message</label>
+        <textarea class="form-control form-control-lg" id="message" name="message" rows="8" placeholder="Message"></textarea>
+        <div class="text-danger" data-validate-for="message"></div>
+    </div>
+
+    {% if __SELF__.property('uploader_enable') %}
+        <div class="mb-3">
+            <span style="font-size: 0.875rem; font-weight: 600;">
+                File Upload
+            </span>
+            {% partial '@filepond' %}
+            <div class="text-danger" data-validate-for="files"></div>
+        </div>
+    {% endif %}
+
+    <div class="mb-3">
+        {% partial '@recaptcha' %}
+    </div>
+    
+    <div class="text-center">
+        <button class="btn btn-primary btn-lg" data-attach-loading>Send</button>
+    </div>
+    
+{{ form_close() }}
+
+
+
+
+
+

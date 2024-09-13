@@ -1,0 +1,19 @@
+<div class="alert alert-{{ type }}">
+    <button type="button" class="alert-close" onclick="this.parentElement.remove()">✖</button>
+
+    {% if title %}
+        <h4>{{ title }}</h4>
+    {% endif %}
+
+    {% if content %}
+        <p>{{ content }}</p>
+    {% endif %}
+
+    {% if list %}
+        <ul>
+            {% for item in list %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

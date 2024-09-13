@@ -1,0 +1,2 @@
+form      : $/spanjaan/forms/models/export/fields.yaml
+modelClass: SpAnjaan\Forms\Models\Record

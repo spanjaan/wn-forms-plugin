@@ -1,0 +1,20 @@
+{
+    "name": "spanjaan/wn-forms-plugin",
+    "type": "winter-plugin",
+    "description": "Create easy (and almost magic) AJAX forms",
+    "keywords": ["winter", "cms", "plugin", "forms", "magic forms"],
+    "homepage": "https://github.com/spanjaan/wn-forms-plugin",
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "S.p. Anjaan",
+            "email": "spanjaan@gmail.com",
+            "role": "Author"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/spanjaan/wn-forms-plugin/issues",
+        "source": "https://github.com/spanjaan/wn-forms-plugin"
+    }
+}

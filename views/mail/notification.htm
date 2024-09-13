@@ -1,0 +1,35 @@
+subject = "New form submitted"
+description = "Form submission notification"
+==
+Record #{{ id}}
+{% for label,value in data %}
+    {{ label|capitalize }}: {% if value is iterable %}{% for val in value %}{{ val|nl2br }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}{{ value|nl2br }}{% endif %}
+{% endfor %}
+==
+{% partial 'table' body %}
+    <table>
+        {% for label,value in data %}
+            <tr>
+                <td style="vertical-align:top; padding-right:10px; font-weight:bold;">{{ label|capitalize }}</td>
+                <td style="vertical-align:top; padding-right:10px;">
+                    {% if value is iterable %}
+                        {% for val in value %}
+                            {{ val|nl2br }}
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {{ value|nl2br }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endpartial %}
+
+{% partial 'subcopy' body %}
+    <p>
+        Id: {{ id }}<br />
+        Ip: {{ ip }}<br />
+        Date: {{ date }}
+    </p>
+{% endpartial %}

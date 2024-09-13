@@ -1,0 +1,16 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?php echo Backend::url('spanjaan/forms/records') ?>"><?php echo __('Records') ?></a></li>
+        <li><?php echo __('Export') ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php echo Form::open(['url' => Backend::url('spanjaan/forms/exports/csv/')]) ?>
+
+    <?php echo $this->formRender() ?>
+
+    <div class="form-buttons m-t-lg">
+        <?= Form::submit(__('Export Records'), ['class' => 'btn btn-primary']) ?>
+    </div>
+
+<?php echo Form::close() ?>

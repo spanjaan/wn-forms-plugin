@@ -1,0 +1,51 @@
+<?= $this->makePartial('partials/view_toolbar') ?>
+
+<div class="list-widget-container border-bottom-0 m-0">
+    <div class="control-table">
+        <div class="table-content">
+            <table class="table data mb-0">
+                <tbody>
+                    <tr>
+                        <th><?= __('Id') ?></th>
+                        <td><?php echo $record->id ?></td>
+                    </tr>
+                    <?php foreach($record->form_data as $label => $value): ?>
+                        <tr>
+                            <th><?php echo ucwords($label) ?></th>
+                            <td>
+                                <?php if(is_array($value) || is_object($value)): ?>
+                                    <ul>
+                                        <?php echo \SpAnjaan\Forms\Classes\BackendHelpers::array2ul($value) ?>
+                                    </ul>
+                                <?php else: ?>
+                                    <?php echo nl2br(htmlspecialchars($value, ENT_QUOTES)); ?>
+                                <?php endif ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    
+                    <?php if(count($record->files) > 0): ?>
+                        <tr>
+                            <th>Attached Files</th>
+                            <td>
+                                <?php foreach($record->files as $file): ?>
+                                    <div>
+                                        <a href="<?= $file->path ?>" target="_blank" rel="nofollow noopener">
+                                            <?php echo $file->file_name ?>
+                                            (<?php echo $file->sizeToString() ?>)
+                                        </a>
+                                    </div>
+                                <?php endforeach ?>
+                            </td>
+                        </tr>
+                    <?php endif ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="list-footer text-muted fst-italic d-flex flex-row justify-content-between fs-6">
+    <div><?= __('Group') ?>: <?php echo $record->group ?></div>
+    <div><?= __('IP address') ?>: <?php echo $record->ip ?></div>
+    <div><?= __('Created at') ?>: <?php echo $record->created_at ?></div>
+</div>

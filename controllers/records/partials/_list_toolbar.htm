@@ -1,0 +1,76 @@
+<div id="records-toolbar" data-control="toolbar">
+
+    <?php
+        echo $this->makePartial('$/spanjaan/forms/controllers/records/partials/_action_button.htm', [
+            'type'            => 'danger',
+            'icon'            => 'oc-icon-trash',
+            'label'           => e(trans('backend::lang.list.delete_selected')),
+            'onclick'         => "$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })",
+            'needs_selected'  => true,
+            'request'         => 'onDelete',
+            'request_confirm' => e(trans('backend::lang.list.delete_selected_confirm')),
+            'request_success' => "
+                $('#records-toolbar').find('button').prop('disabled', true);
+                oc.flashMsg({
+                    'text': '" . e(trans('backend::lang.list.delete_selected_success')) . "',
+                    'class': 'success',
+                    'interval': 3
+                });
+                $.oc.sideNav.setCounter('forms/records', data.counter);
+                $('#Lists').html(data.list['#Lists']);
+            ",
+        ]);
+    ?>
+
+    <div class="btn-group">
+    <?php
+        echo $this->makePartial('$/spanjaan/forms/controllers/records/partials/_action_button.htm', [
+            'type'            => 'default',
+            'icon'            => 'oc-icon-eye-slash',
+            'label'           => __('Mark as Unread'),
+            'onclick'         => "$(this).data('request-data', { state: 'unread', checked: $('.control-list').listWidget('getChecked') })",
+            'needs_selected'  => true,
+            'request'         => 'onReadState',
+            'request_confirm' => '',
+            'request_success' => "
+                $('#records-toolbar').find('button').prop('disabled', true);
+                $.oc.sideNav.setCounter('forms/records', data.counter);
+                $('#Lists').html(data.list['#Lists']);
+            ",
+        ]);
+
+        echo $this->makePartial('$/spanjaan/forms/controllers/records/partials/_action_button.htm', [
+            'type'            => 'default',
+            'icon'            => 'oc-icon-eye',
+            'label'           => __('Mark as Read'),
+            'onclick'         => "$(this).data('request-data', { state: 'read', checked: $('.control-list').listWidget('getChecked') })",
+            'needs_selected'  => true,
+            'request'         => 'onReadState',
+            'request_confirm' => '',
+            'request_success' => "
+                $('#records-toolbar').find('button').prop('disabled', true);
+                $.oc.sideNav.setCounter('forms/records', data.counter);
+                $('#Lists').html(data.list['#Lists']);
+            ",
+        ]);
+    ?>
+    </div>
+
+    <?php
+        if(SpAnjaan\Forms\Models\Settings::get('gdpr_enable')) {
+            echo $this->makePartial('$/spanjaan/forms/controllers/records/partials/_action_button.htm', [
+                'type'            => 'danger',
+                'icon'            => 'oc-icon-history',
+                'label'           => __('GDPR Clean'),
+                'request'         => 'onGDPRClean',
+                'request_confirm' => __('Are you sure you want to clean old records? This action cannot be undone!'),
+                'request_success' => "
+                    $('#records-toolbar').find('button').blur();
+                    $.oc.sideNav.setCounter('forms/records', data.counter);
+                    $('#Lists').html(data.list['#Lists']);
+                ",
+            ]);
+        }
+    ?>
+
+</div>

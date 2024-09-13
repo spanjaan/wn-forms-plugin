@@ -1,0 +1,132 @@
+{% set alias = __SELF__.alias %}
+{% set uploader_enable = __SELF__.property('uploader_enable') %}
+{% set uploader_label = __SELF__.property('uploader_label') %}
+{% set max_files = __SELF__.property('maxFiles') %}
+{% set max_filesize = __SELF__.property('maxFileSize') %}
+{% set max_totalsize = __SELF__.property('maxTotalSize') %}
+{% set allowed_filetypes = __SELF__.property('fileTypes') %}
+
+{% if uploader_enable %}
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css" rel="stylesheet">
+<link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
+<style>
+/* use a hand cursor intead of arrow for the action buttons */
+.filepond--file-action-button {
+    cursor: pointer;
+}
+
+/* the text color of the drop label*/
+.filepond--drop-label {
+    color: #eff2fc;
+}
+
+/* underline color for "Browse" button */
+.filepond--label-action {
+    text-decoration-color: #eff2fc;
+}
+
+/* the border radius of the file item */
+.filepond--item-panel {
+    border-radius: 0.5em;
+}
+
+/* the background color of the file and file panel (used when dropping an image) */
+.filepond--item-panel {
+    background-color: #22c55e;
+}
+
+/* the background color of the drop circle */
+.filepond--drip-blob {
+    background-color: #22c55e;
+}
+
+/* the background color of the black action buttons */
+.filepond--file-action-button {
+    background-color: #6f42c1;
+}
+
+/* the icon color of the black action buttons */
+.filepond--file-action-button {
+    color: white;
+}
+
+/* the color of the focus ring */
+.filepond--file-action-button:hover,
+.filepond--file-action-button:focus {
+    box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.9);
+}
+
+/* the text color of the file status and info labels */
+.filepond--file {
+    color: white;
+}
+
+/* error state color */
+[data-filepond-item-state*='error'] .filepond--item-panel,
+[data-filepond-item-state*='invalid'] .filepond--item-panel {
+    background-color: #ef4444;
+}
+
+[data-filepond-item-state='processing-complete'] .filepond--item-panel {
+    background-color: #22c55e;
+}
+
+/* bordered drop area */
+.filepond--panel-root {
+    background-color: #33354d;
+}
+
+</style>
+
+<input type="file" name="files[]" multiple>
+
+<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+
+
+<script>
+    const inputElement = document.querySelector('input[type="file"]');
+
+    FilePond.registerPlugin(
+        FilePondPluginFileEncode,
+        FilePondPluginFileValidateSize,
+        FilePondPluginFileValidateType,
+        FilePondPluginImageExifOrientation,
+        FilePondPluginImagePreview
+    );
+
+    pond = FilePond.create(inputElement, {
+        onwarning: (status, files) => { alert(_('The maximum number of files is {{ max_files }}')) },
+        
+        maxFiles: '{{ max_files }}',
+        storeAsFile: true,
+        allowReorder: true,
+        credits: null,
+        
+        // Labels
+        labelIdle: _('{{ uploader_label }}'),
+        labelInvalidField: _('Field contains invalid files'),
+
+        // File types validation
+        allowFileTypeValidation: true,
+        acceptedFileTypes: {{ allowed_filetypes|keys|json_encode|raw }},
+        fileValidateTypeLabelExpectedTypesMap: {{ allowed_filetypes|json_encode|raw }},
+        labelFileTypeNotAllowed: _('File of invalid type'),
+        fileValidateTypeLabelExpectedTypes: _('Expects {allButLastType} or {lastType}'),
+
+        // File sizes validation
+        allowFileSizeValidation: true,
+        maxFileSize: '{{ max_filesize }}',
+        maxTotalFileSize: '{{ max_totalsize }}',
+        labelMaxFileSizeExceeded: _('File is too large'),
+        labelMaxFileSize: _('Maximum file size is {filesize}'),
+        labelMaxTotalFileSizeExceeded: _('Maximum total size exceeded'),
+        labelMaxTotalFileSize: _('Maximum total file size is {filesize}'),
+    });
+</script>
+
+{% endif %}
